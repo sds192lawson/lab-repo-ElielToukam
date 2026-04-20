@@ -1,0 +1,97 @@
+---
+title: "Problem2"
+format: html
+---
+
+```{r}
+library(pdxTrees)
+library(tidyverse)
+library(leaflet)
+library(sf)
+library(mlbench)
+library(sf)
+
+```
+
+```{r}
+park <- get_pdxTrees_parks()
+st_as_sf(park)
+```
+
+```{r}
+
+ pal <- colorFactor(palette = "YlOrRd", 
+                    domain = park$Species,
+                    reverse = F)
+leaflet() |>
+  setView(lat =  45.575 , lng = -122.683, zoom = 13) |>
+  addProviderTiles("OpenStreetMap") |>
+  addCircleMarkers(data = park,
+                   fillColor = ~pal(Species),
+                   fillOpacity = 2) |>
+addLegend (data = park,
+title = "Distribution of Tree Species in Portland", 
+pal = colorFactor(palette = "YlOrRd", 
+                    domain = park$Species,
+                    reverse = F), 
+values = ~Species)
+
+```
+
+```{r}
+ pal <- colorBin(palette = "YlOrRd", 
+                    domain = park$Carbon_Storage_value,
+                     bins = 7,
+                    reverse = TRUE)
+leaflet() |>
+  setView(lat =  45.575 , lng = -122.683, zoom = 13) |>
+  addProviderTiles("OpenStreetMap") |>
+  addCircleMarkers(data = park,
+                   fillColor = ~pal(Carbon_Storage_value),
+                   fillOpacity = 2) |>
+addLegend (data = park,
+title = "Carbon Storage Value", 
+pal = colorBin(palette = "YlOrRd",
+                    domain = park$Carbon_Storage_value,
+                    bins= 7,
+                    reverse = TRUE), 
+values = ~Carbon_Storage_value)
+```
+
+```{r}
+pal <- colorNumeric(palette = "YlOrRd", 
+                    domain = park$Total_Annual_Services,
+                    reverse = TRUE)
+leaflet() |>
+  setView(lat =  45.575 , lng = -122.683, zoom = 13) |>
+  addProviderTiles("OpenStreetMap") |>
+  addCircleMarkers(data = park,
+                   fillColor = ~pal(Total_Annual_Services),
+                   fillOpacity = 2) |>
+addLegend (data = park,
+title = "Annual Services", 
+pal = colorNumeric(palette = "YlOrRd",
+                    domain = park$Total_Annual_Services,
+                    reverse = TRUE), 
+values = ~Total_Annual_Services)
+```
+
+```{r}
+ pal <- colorFactor(palette = "YlOrRd", 
+                    domain = park$Condition,
+                    reverse = F)
+leaflet() |>
+  setView(lat =  45.575 , lng = -122.683, zoom = 13) |>
+  addProviderTiles("OpenStreetMap") |>
+  addCircleMarkers(data = park,
+                   fillColor = ~pal(Condition),
+                   fillOpacity = 2) |>
+addLegend (data = park,
+title = "Distribution of Tree Species in Portland", 
+pal = colorFactor(palette = "YlOrRd", 
+                    domain = park$Condition,
+                    reverse = F), 
+values = ~Condition)
+
+```
+
